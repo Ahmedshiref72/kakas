@@ -43,3 +43,14 @@ class ChangeExpandedState  extends LoginStates
 
   ChangeExpandedState(this.isExpanded);
 }
+class ValidateLoadingState  extends LoginStates
+{
+}
+class ValidateLoginSuccessState  extends LoginStates
+{
+}
+class ValidateLoginErrorState  extends LoginStates
+{
+  final String error;
+  ValidateLoginErrorState(this.error);
+}

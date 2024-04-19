@@ -34,6 +34,13 @@ class FormLoginFields extends StatelessWidget {
         } else if (state is LoginErrorState) {
           showToast(text: state.error, state: ToastStates.ERROR);
         }
+        if (state is ValidateLoginSuccessState)
+        {
+          showToast(text: AppStrings.validateSucces, state: ToastStates.SUCCESS);
+
+        } else if (state is ValidateLoginErrorState) {
+          showToast(text: state.error, state: ToastStates.ERROR);
+        }
       },
       builder: (context, state) {
       return Form(
@@ -99,6 +106,8 @@ class FormLoginFields extends StatelessWidget {
                     email: _emailController.text.trim(),
                     password: _passwordController.text,
                   );
+                  //perform validation
+                  LoginCubit.get(context).validate();
 
 
                 },

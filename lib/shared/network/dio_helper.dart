@@ -26,13 +26,18 @@ class DioHelper {
     );
   }
 
+
+
   static Future<Response> postDataFromFormData({
     required String url,
-    required FormData data,
+    required Map<String, dynamic> data,
     Map<String, dynamic>? query,
     String? token,
   }) async {
-    dio!.options.headers = {'Content-Type': 'application/json'};
+    dio!.options.headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json'
+    };
 
     return dio!.post(
       url,
@@ -40,6 +45,8 @@ class DioHelper {
       data: data,
     );
   }
+
+
 
   static Future<Response> postDataFromFormDataForImage({
     required String url,
@@ -58,5 +65,23 @@ class DioHelper {
       queryParameters: query,
       data: data,
     );
+  }
+
+  static Future<Response> deleteData({
+    required String url,
+    required String token,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    dio!.options.headers['Authorization'] = 'Bearer $token';
+
+    try {
+      final response = await dio!.delete(
+        url,
+        queryParameters: queryParameters,
+      );
+      return response;
+    } catch (e) {
+      throw Exception('Failed to delete data: $e');
+    }
   }
 }

@@ -9,7 +9,8 @@ class AppConstants {
 
   // Cache helper
   static const String userId = "userId";
+  static const String userName = "username";
   static const String token = "token";
-  static const String userName = "userName";
+  static const String image = "image";
 
 }

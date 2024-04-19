@@ -1,28 +1,83 @@
 
+import 'dart:io';
+
+import 'package:kakas/home/data/models/myGallery_model/data_model.dart';
+
+import '../../../data/models/myGallery_model/product_model.dart';
+import 'home_cubit.dart';
+
 abstract class HomeStates {}
 
 class HomeInitialState extends HomeStates {}
 
-class GetDataLoadingState extends HomeStates {}
+class ProductInitial extends HomeStates {}
 
-class GetDataSuccessState extends HomeStates {
-  final List<String> images;
+class ProductLoadSuccess extends HomeStates {
+  final List<ProductData> products;
 
-  GetDataSuccessState(this.images);
+  ProductLoadSuccess(this.products);
 }
 
-class GetDataErrorState extends HomeStates {
-  final String error;
+class ProductLoadFailure extends HomeStates{
+  final String errorMessage;
 
-  GetDataErrorState(this.error);
+  ProductLoadFailure(this.errorMessage);
 }
 
-class LogOutLoadingState extends HomeStates {}
 
-class LogOutSuccessState extends HomeStates {}
+class PostProductInitial extends HomeStates {}
 
-class LogOutErrorState extends HomeStates {
-  final String error;
+class PostProductLoading extends HomeStates {}
+class LogoutSuccess extends HomeStates {}
 
-  LogOutErrorState(this.error);
+class PostProductSuccess extends HomeStates {}
+
+class PostProductFailure extends HomeStates {
+  final String errorMessage;
+
+  PostProductFailure(this.errorMessage);
+}
+
+
+
+
+class ImageSelectedState extends HomeStates {
+  final File imageFile;
+
+  ImageSelectedState(this.imageFile);
+}
+
+class ImageUploadedState extends HomeStates {
+  final String imageUrl;
+
+  ImageUploadedState(this.imageUrl);
+}
+
+class ImageUploadFailedState extends HomeStates {
+  final String errorMessage;
+
+  ImageUploadFailedState(this.errorMessage);
+}
+
+// Define events
+abstract class HomeEvent {}
+
+class SelectImageEvent extends HomeEvent {}
+
+class UploadImageEvent extends HomeEvent {
+  final File imageFile;
+
+  UploadImageEvent(this.imageFile);
+}
+// State emitted when the product deletion process starts
+class DeletingProduct extends HomeStates {}
+
+// State emitted when the product is successfully deleted
+class ProductDeleteSuccess extends HomeStates {}
+
+// State emitted when there is an error during product deletion
+class ProductDeleteFailure extends HomeStates {
+  final String errorMessage;
+
+  ProductDeleteFailure(this.errorMessage);
 }

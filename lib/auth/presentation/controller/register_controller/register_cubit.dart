@@ -20,10 +20,10 @@ class RegisterCubit extends Cubit<RegisterStates> {
     emit(RegisterLoadingState());
     await DioHelper.postDataFromFormData(
       url: ApiConstants.register,
-      data: FormData.fromMap({
+      data: {
         'username': email,
         'password': password
-      }),
+      },
     ).then((value) {
       print(value.data.toString());
       emit(RegisterSuccessState());

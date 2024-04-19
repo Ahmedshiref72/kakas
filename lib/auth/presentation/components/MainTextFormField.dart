@@ -80,9 +80,9 @@ OutlineInputBorder _outlineInputBorder() {
 }
 
 OutlineInputBorder _outlineInputBorderStyle() {
-  return const OutlineInputBorder(
+  return  OutlineInputBorder(
     borderSide: BorderSide(
-      color: ColorManager.white,
+      color: ColorManager.primary,
       width: AppSize.s0_5,
     ),
     borderRadius: BorderRadius.all(

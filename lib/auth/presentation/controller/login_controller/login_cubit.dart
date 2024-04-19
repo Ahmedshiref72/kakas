@@ -23,10 +23,10 @@ class LoginCubit extends Cubit<LoginStates> {
     try {
       final response = await DioHelper.postDataFromFormData(
         url: ApiConstants.login,
-        data: FormData.fromMap({
+        data: {
           'username': email,
           'password': password,
-        }),
+        },
       );
 
       // Assuming your API response contains a token
@@ -38,7 +38,7 @@ class LoginCubit extends Cubit<LoginStates> {
         token: token,
       );
     // Save the username and token
-    await CacheHelper.setData(key: 'username', value: email);
+    await CacheHelper.setData(key: AppConstants.userName, value: email);
     await CacheHelper.setData(key: AppConstants.token, value: token);
 
       emit(LoginSuccessState(loginModel));
@@ -47,6 +47,18 @@ class LoginCubit extends Cubit<LoginStates> {
       print(error.toString());
       emit(LoginErrorState(AppStrings.loginError));
     }
+  }
+
+  void validate() {
+    emit(ValidateLoadingState());
+    DioHelper.getData(url: ApiConstants.validate,
+      token: CacheHelper.getData(key: AppConstants.token),
+    ).then((value) {
+      print(value.data);
+      emit(ValidateLoginSuccessState());
+    }).catchError((error) {
+      emit(ValidateLoginErrorState(AppStrings.loginError));
+    });
   }
 
   bool isObsecured = true;
