@@ -124,9 +124,7 @@ class HomeCubit extends Cubit<HomeStates> {
     }
   }
 
-  void clearSelectedImage() {
-    emit(HomeInitialState());
-  }
+
   Future<void> deleteProduct(int productId) async {
     emit(DeletingProduct());
 
@@ -151,6 +149,39 @@ class HomeCubit extends Cubit<HomeStates> {
     }
   }
 
+  Future<void> updateProduct(int productId, String title, double price, String image) async {
+    emit(UpdatingProduct());
+
+    try {
+      String token = await CacheHelper.getData(key: AppConstants.token);
+      Dio dio = Dio();
+
+      dio.options.headers = {
+        'Authorization': 'Bearer $token',
+      };
+
+      Response response = await dio.put(
+        ApiConstants.getProducts,
+        data: {
+          'title': title,
+          'price': price,
+          'image': image,
+        },
+        queryParameters: {'id': productId},
+      );
+
+      if (response.statusCode == 200) {
+        // Product updated successfully
+        emit(ProductUpdateSuccess());
+      } else {
+        // Failed to update product
+        emit(ProductUpdateFailure('Failed to update product: ${response.statusCode}'));
+      }
+    } catch (e) {
+      // Error updating product
+      emit(ProductUpdateFailure('Error updating product: $e'));
+    }
+  }
 }
 
 

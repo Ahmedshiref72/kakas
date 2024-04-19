@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kakas/home/data/models/myGallery_model/product_model.dart';
+import 'package:kakas/home/presentation/screens/home/update_product.dart';
 import 'package:kakas/home/presentation/screens/home/upload_product.dart';
 import 'package:kakas/shared/components/toast_component.dart';
 import 'dart:io';
@@ -131,58 +132,81 @@ class HomeView extends StatelessWidget {
                             children: [
                               Align(
                                 alignment: Alignment.topLeft,
-                                child: IconButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          backgroundColor:
-                                              Colors.white.withOpacity(0.8),
-                                          title: Text('Confirm Deletion'),
-                                          content: Text(
-                                              'Are you sure you want to delete this product?'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context)
-                                                    .pop(); // Close the alert dialog
-                                              },
-                                              child: Text(
-                                                'Cancel',
-                                                style: TextStyle(
-                                                    color: ColorManager.primary,
-                                                    fontSize: FontSize.s14),
-                                              ),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {
-                                                // Perform the delete action
-                                                context
-                                                    .read<HomeCubit>()
-                                                    .deleteProduct(product.id);
-                                                Navigator.of(context)
-                                                    .pop(); // Close the alert dialog
-                                              },
-                                              child: Text(
-                                                'Delete',
-                                                style: TextStyle(
-                                                    color: ColorManager.primary,
-                                                    fontSize: FontSize.s14),
-                                              ),
-                                            ),
-                                          ],
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              backgroundColor:
+                                                  Colors.white.withOpacity(0.8),
+                                              title: Text('Confirm Deletion'),
+                                              content: Text(
+                                                  'Are you sure you want to delete this product?'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context)
+                                                        .pop(); // Close the alert dialog
+                                                  },
+                                                  child: Text(
+                                                    'Cancel',
+                                                    style: TextStyle(
+                                                        color: ColorManager.primary,
+                                                        fontSize: FontSize.s14),
+                                                  ),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () {
+                                                    // Perform the delete action
+                                                    context
+                                                        .read<HomeCubit>()
+                                                        .deleteProduct(product.id);
+                                                    Navigator.of(context)
+                                                        .pop(); // Close the alert dialog
+                                                  },
+                                                  child: Text(
+                                                    'Delete',
+                                                    style: TextStyle(
+                                                        color: ColorManager.primary,
+                                                        fontSize: FontSize.s14),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          },
                                         );
                                       },
-                                    );
-                                  },
-                                  icon: const Icon(
-                                    Icons.delete_forever,
-                                    size: 35,
-                                    color: Colors.red,
-                                  ),
+                                      icon: const Icon(
+                                        Icons.delete_forever,
+                                        size: 35,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    IconButton(
+                                      onPressed: () {
+                                        // Navigate to the EditProductScreen and pass the product data
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => EditProductScreen(product: product),
+                                          ),
+                                        );
+                                      },
+                                      icon: const Icon(
+                                        Icons.edit,
+                                        size: 20,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+
+                                  ],
                                 ),
                               ),
+
                               Expanded(
                                 child: product.image.isNotEmpty
                                     ? ClipRRect(

@@ -81,3 +81,18 @@ class ProductDeleteFailure extends HomeStates {
 
   ProductDeleteFailure(this.errorMessage);
 }
+
+
+
+class UpdatingProduct extends HomeStates {}
+
+class ProductUpdateSuccess extends HomeStates {}
+
+class ProductUpdateFailure extends HomeStates {
+  final String errorMessage;
+
+  ProductUpdateFailure(this.errorMessage);
+
+  @override
+  List<Object> get props => [errorMessage];
+}

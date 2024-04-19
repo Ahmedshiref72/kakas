@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../auth/presentation/screens/login/login_view.dart';
 import '../../home/presentation/screens/home/home_view.dart';
+import '../../home/presentation/screens/home/update_product.dart';
 import '../../home/presentation/screens/home/upload_product.dart';
 import '../../splash/presentation/screens/splash_screen.dart';
 import '../local/shared_preference.dart';
@@ -13,6 +14,7 @@ class Routes {
   static const String loginRoute = "/loginRoute";
   static const String homeScreenRoute = "/homeScreen";
   static const String uploadscreenRoute = "/uploadscreen";
+  static const String editProductRoute = '/edit_product';
 }
 
 class RouteGenerator {
@@ -27,6 +29,7 @@ class RouteGenerator {
       return MaterialPageRoute(builder: (_) => const HomeView());
       case Routes.uploadscreenRoute:
       return MaterialPageRoute(builder: (_) => const UploadProductScreen());
+
 
       default:
         return unDefinedRoute();
